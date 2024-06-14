@@ -1,0 +1,140 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+}
+
+.container {
+    display: flex;
+    height: 100vh;
+}
+
+.form-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #BECFD7;
+    padding: 20px;
+}
+
+.form-logo {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.form-logo img {
+    width: 200px;
+}
+
+form {
+    width: 100%;
+    max-width: 400px;
+    padding: 20px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    border-radius: 8px;
+}
+
+form h2 {
+    margin-top: 0;
+    color: #333;
+}
+
+form p {
+    color: #777;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    color: #333;
+}
+
+input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+button {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.signup-btn {
+    background-color: #007bff;
+    color: #fff;
+}
+
+.signup-btn:hover {
+    background-color: #0056b3;
+}
+
+form p {
+    text-align: center;
+    margin-top: 20px;
+    color: #777;
+}
+
+form p a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+form p a:hover {
+    text-decoration: underline;
+}
+
+.image-container {
+    flex: 1;
+    position: relative;
+    overflow: hidden;
+}
+
+.image-container img {
+    width: 100%; /* Ajusta el ancho de la imagen al 100% del contenedor */
+    height: auto; /* Mantén la proporción de la imagen */
+    max-height: 100%; /* Asegúrate de que la imagen no sea más alta que el contenedor */
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: flex-start; /* Cambia la alineación vertical */
+    align-items: flex-start; /* Cambia la alineación horizontal */
+    padding: 20px; /* Añade un poco de espacio alrededor del contenido */
+}
+
+.overlay-content {
+    text-align: center;
+    color: #313030;
+    text-shadow: 2px 2px 4px #fff;  /* Agrega un contorno al texto */
+    padding: 10px;
+    border-radius: 8px;
+    justify-content: center;
+}
+
+.overlay-content h1 {
+    margin: 0;
+    font-size: 2em;
+}
+
+.overlay-content p {
+    margin-top: 10px;
+    font-size: 1.2em;
+}
