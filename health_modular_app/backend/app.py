@@ -37,27 +37,39 @@ def login():
         }, app.config['SECRET_KEY'])
         return jsonify({'success': True, 'token': token})
 
-    return jsonify({'success': False, 'message': 'Invalid email or password'})
+    return jsonify({'success': False, 'message': 'email o contraseña invalida'})
 
 @app.route('/api/signup', methods=['POST'])
 def signup():
     data = request.get_json()
-    email = data['email']
-    password = data['password']
-
+    try:
+        nombres = data['firstName']
+        apellidos = data['lastName']
+        email = data['email']
+        password = data['password']
+        dob = data['dob']
+        genero = data['gender']
+        estatura = data['height']
+        peso = data['weight']
+        tipo_sangre = data['blood_type']
+    except KeyError as e:
+        return jsonify({'success': False, 'message': f'Missing field: {email}'})
+    
     # Verificar si el usuario ya existe
     cursor = mysql.connection.cursor()
-    cursor.execute("SELECT * FROM users WHERE email = %s", (email,))
+    cursor.execute("SELECT * FROM users WHERE correo = %s", (email,))
     user = cursor.fetchone()
 
     if user:
+        cursor.close()
         return jsonify({'success': False, 'message': 'Email already exists'})
 
     # Encriptar la contraseña
     hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
 
     # Insertar nuevo usuario en la base de datos
-    cursor.execute("INSERT INTO users (email, password) VALUES (%s, %s)", (email, hashed_password.decode('utf-8')))
+    cursor.execute("""INSERT INTO users (nombres, apellidos, correo, password, dob, genero, estatura, peso, tipo_sangre) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)""", (nombres, apellidos, email, hashed_password.decode('utf-8'), dob, genero, estatura, peso, tipo_sangre))
+    
     mysql.connection.commit()
     cursor.close()
 
