@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Signup - Healthcare</title>
+    <title>Regístrate - MediConnect</title>
     <link rel="stylesheet" href="css/signup.css">
 </head>
 <body>
@@ -13,18 +13,69 @@
                 <img src="images/logo.webp" alt="Logo">
             </div>
             <form id="signup-form">
-                <h2>Sign Up</h2>
-                <p>Create a new account.</p>
-                <div class="form-group">
-                    <label for="email">Email</label>
-                    <input type="email" id="email" name="email" placeholder="Enter your email" required>
+                <h2>Regístrate</h2>
+                <p>Crea una cuenta nueva.</p>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="firstname">Nombres</label>
+                        <input type="text" id="firstname" name="firstname" placeholder="Ingresa tus Nombres" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="lastname">Apellidos</label>
+                        <input type="text" id="lastname" name="lastname" placeholder="Ingresa tus Apellidos" required>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label for="password">Password</label>
-                    <input type="password" id="password" name="password" placeholder="Enter your password" required>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="dob">Fecha de Nacimiento</label>
+                        <input type="date" id="dob" name="dob" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="gender">Sexo</label>
+                        <select id="gender" name="gender" required>
+                            <option value="0">Masculino</option>
+                            <option value="1">Femenino</option>
+                            <option value="2">Otro</option>
+                        </select>
+                    </div>
                 </div>
-                <button type="submit" class="signup-btn">Sign Up</button>
-                <p>Already have an account? <a href="login.php">Log In</a></p>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="height">Estatura (cm)</label>
+                        <input type="number" id="height" name="height" placeholder="Ingresa tu Estatura en cm" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="weight">Peso (kg)</label>
+                        <input type="number" id="weight" name="weight" placeholder="Ingresa tu Peso en kg" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="bloodtype">Tipo de Sangre</label>
+                        <select id="bloodtype" name="bloodtype" required>
+                            <option value="A+">A+</option>
+                            <option value="A-">A-</option>
+                            <option value="B+">B+</option>
+                            <option value="B-">B-</option>
+                            <option value="AB+">AB+</option>
+                            <option value="AB-">AB-</option>
+                            <option value="O+">O+</option>
+                            <option value="O-">O-</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Correo Electrónico</label>
+                        <input type="email" id="email" name="email" placeholder="Ingresa tu Correo Electrónico" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="password">Contraseña</label>
+                        <input type="password" id="password" name="password" placeholder="Ingresa tu Contraseña" required>
+                    </div>
+                </div>
+                <button type="submit" class="signup-btn">Registrarte</button>
+                <p>¿Ya tienes cuenta? <a href="login.php">Inicia Sesión</a></p>
             </form>
         </div>
         <div class="image-container">
@@ -40,4 +91,3 @@
     <script src="js/signup.js"></script>
 </body>
 </html>
-
