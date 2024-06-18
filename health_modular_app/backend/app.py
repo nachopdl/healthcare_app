@@ -27,10 +27,10 @@ def login():
     password = data['password']
 
     cursor = mysql.connection.cursor()
-    cursor.execute("SELECT * FROM users WHERE email = %s", (email,))
+    cursor.execute("SELECT * FROM users WHERE correo = %s", (email,))
     user = cursor.fetchone()
 
-    if user and bcrypt.checkpw(password.encode('utf-8'), user[2].encode('utf-8')):
+    if user and bcrypt.checkpw(password.encode('utf-8'), user[4].encode('utf-8')):
         token = jwt.encode({
             'user_id': user[0],
             'exp': datetime.datetime.utcnow() + datetime.timedelta(hours=1)
@@ -62,7 +62,7 @@ def signup():
 
     if user:
         cursor.close()
-        return jsonify({'success': False, 'message': 'Email already exists'})
+        return jsonify({'success': False, 'message': 'Ya existe el correo electronico'})
 
     # Encriptar la contraseña
     hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
@@ -73,7 +73,7 @@ def signup():
     mysql.connection.commit()
     cursor.close()
 
-    return jsonify({'success': True, 'message': 'User registered successfully'})
+    return jsonify({'success': True, 'message': 'Usuario registrado exitosamente'})
 
 if __name__ == '__main__':
     app.run(debug=True)
