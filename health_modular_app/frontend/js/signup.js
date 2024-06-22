@@ -32,7 +32,7 @@ document.getElementById('signup-form').addEventListener('submit', function (even
     .then(data => {
         if (data.success) {
             alert('Registration successful!');
-            window.location.href = 'dashboard'; // Redirige al dashboard después de registrarse
+            window.location.href = 'login.php'; // Redirige al dashboard después de registrarse
         } else {
             alert('Registration failed: ' + data.message);
         }
