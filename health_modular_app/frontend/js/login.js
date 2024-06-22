@@ -8,13 +8,13 @@ document.getElementById('login-form').addEventListener('submit', function (event
         headers: {
             'Content-Type': 'application/json'
         },
+        credentials: 'include',
         body: JSON.stringify({ email, password })
     })
     .then(response => response.json())
     .then(data => {
         if (data.success) {
-            alert('Login successful!');
-            window.location.href = 'signup.php'; // Redirige al dashboard u otra página
+            window.location.href = 'dashboard.php'; // Redirigir al dashboard
         } else {
             alert('Login failed: ' + data.message);
         }
@@ -23,3 +23,4 @@ document.getElementById('login-form').addEventListener('submit', function (event
         console.error('Error:', error);
     });
 });
+
