@@ -33,9 +33,9 @@
                     <div class="form-group">
                         <label for="gender">Sexo</label>
                         <select id="gender" name="gender" required>
-                            <option value="0">Masculino</option>
-                            <option value="1">Femenino</option>
-                            <option value="2">Otro</option>
+                            <option value="masculino">Masculino</option>
+                            <option value="femenino">Femenino</option>
+                            <option value="otro">Otro</option>
                         </select>
                     </div>
                 </div>
