@@ -22,6 +22,11 @@ document.addEventListener('DOMContentLoaded', function () {
             document.getElementById('user-blood').textContent = data.blood_type;
             document.getElementById('user-height').textContent = `${data.height} cm`;
             document.getElementById('user-weight').textContent = `${data.weight} kg`;
+            if (data.gender == 'masculino'){
+                document.getElementById('user-photo').src = 'images/avatar1.png'
+            }else{
+                document.getElementById('user-photo').src = 'images/avatar.png'
+            }
         }else {
             alert('Failed to load user data: ' + data.message);
             window.location.href = 'login.php'; // Redirigir al login si no hay datos de usuario
