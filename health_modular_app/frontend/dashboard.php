@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard - MediConnect</title>
     <link rel="stylesheet" href="css/dashboard.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 </head>
 <body>
     <div class="container">
@@ -16,6 +16,7 @@
                 <span>MediConnect</span>
             </div>
             <ul class="nav-links">
+                <li class='nav-item'><a href="perfil.php"><i class="fa-light fa-user"></i> Perfil</a></li>
                 <li class="nav-item">
                     <a href="#"><i class="fas fa-dumbbell"></i> Física</a>
                     <ul class="submenu">
@@ -46,7 +47,7 @@
             <!-- KPIs y Gráficos Interactivos -->
             <div class="kpis">
                 <div class="kpi-card">
-                    <img src="images/user.jpg" alt="User Photo" class="user-photo">
+                    <img src="" alt="User Photo" id='user-photo'class="user-photo">
                     <h2 id="user-fullname">Ignacio Partida de Leon</h2>
                     <p id="user-age-location">24 años</p>
                     <div class="user-info">
