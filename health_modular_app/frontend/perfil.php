@@ -46,6 +46,10 @@
                 <p id="user-age-location">24 años</p>
                 <div class="user-info">
                     <div class="info-item">
+                        <p>ID</p>
+                        <p id="user-id"></p>
+                    </div>
+                    <div class="info-item">
                         <p>Correo Electrónico</p>
                         <p id="user-email">john.doe@example.com</p>
                     </div>
@@ -69,9 +73,46 @@
                 </div>
             </div>
         </div>
+        <!-- Modal para editar el perfil -->
+        <div id="edit-profile-modal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h2>Editar Perfil</h2>
+                <form id="edit-profile-form">
+                    <div class="form-group">
+                        <label for="first-name">Nombres</label>
+                        <input type="text" id="first-name" name="first-name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="last-name">Apellidos</label>
+                        <input type="text" id="last-name" name="last-name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Correo Electrónico</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="height">Estatura (cm)</label>
+                        <input type="number" id="height" name="height" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="weight">Peso (kg)</label>
+                        <input type="number" id="weight" name="weight" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="blood-type">Tipo de Sangre</label>
+                        <input type="text" id="blood-type" name="blood-type" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="photo">Foto de Perfil</label>
+                        <input type="file" id="photo" name="photo">
+                    </div>
+                    <button type="submit">Guardar Cambios</button>
+                </form>
+            </div>
+        </div>
     </div>
 
     <script src="js/perfil.js"></script>
 </body>
 </html>
-
