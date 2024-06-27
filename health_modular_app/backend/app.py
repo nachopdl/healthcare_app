@@ -4,9 +4,11 @@ import bcrypt
 from flask_cors import CORS
 from flask_session import Session
 import logging
+import os
+from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
-CORS(app, supports_credentials=True, origins=["http://localhost"])  # Habilitar CORS para todas las rutas
+CORS(app, supports_credentials=True)  # Habilitar CORS para todas las rutas
 
 logging.basicConfig(level=logging.DEBUG)
 
@@ -16,12 +18,30 @@ app.config['MYSQL_USER'] = 'root'
 app.config['MYSQL_PASSWORD'] = ''
 app.config['MYSQL_DB'] = 'healthcare'
 
+
 mysql = MySQL(app)
 
 # Configuración de la sesión
-app.secret_key = 'supersecretkey'
+# Configuración de la sesión
+app.config['SECRET_KEY'] = 'your_secret_key'
 app.config['SESSION_TYPE'] = 'filesystem'
+app.config['SESSION_PERMANENT'] = False
+app.config['SESSION_USE_SIGNER'] = True
+app.config['SESSION_KEY_PREFIX'] = 'session:'
+app.config['SESSION_COOKIE_HTTPONLY'] = True
+app.config['SESSION_COOKIE_SAMESITE'] = 'Lax'
+
+# Configuración de carga de archivos
+UPLOAD_FOLDER = '..\\frontend\\uploads\\'
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16 MB límite de tamaño de archivo
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
 Session(app)
+
+#Funcion para tratar las imagenes
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
 
 @app.route('/api/login', methods=['POST'])
 def login():
@@ -89,21 +109,26 @@ def user_data():
     try:
         if 'user' in session:
             user_id = session['user']
+            app.logger.debug(f'User {(user_id)}')
+
             cursor = mysql.connection.cursor()
-            cursor.execute("SELECT nombres, apellidos, correo, dob, genero, estatura, peso, tipo_sangre FROM users WHERE id = %s", (user_id,))
+            cursor.execute("SELECT id, nombres, apellidos, correo, dob, genero, estatura, peso, tipo_sangre, foto FROM users WHERE id = %s", (user_id,))
             user1 = cursor.fetchone()
             cursor.close()
+            print(user1[9])
             if user1:
                 return jsonify({
                     'success': True,
-                    'first_name': user1[0],
-                    'last_name': user1[1],
-                    'email': user1[2],
-                    'dob': user1[3],
-                    'gender': user1[4],
-                    'height': user1[5],
-                    'weight': user1[6],
-                    'blood_type': user1[7]
+                    'id': user1[0],
+                    'first_name': user1[1],
+                    'last_name': user1[2],
+                    'email': user1[3],
+                    'dob': user1[4],
+                    'gender': user1[5],
+                    'height': user1[6],
+                    'weight': user1[7],
+                    'blood_type': user1[8],
+                    'foto': user1[9]
                 })
             else:
                 return jsonify({'success': False, 'message': 'User not found'}), 404
@@ -112,6 +137,63 @@ def user_data():
     except Exception as e:
         app.logger.error(f'Error fetching user data: {e}')
         return jsonify({'success': False, 'message': 'Internal server error'}), 500
+    
+@app.route('/api/update_user', methods=['POST'])
+def update_user():
+    try:
+        data = request.form
+        user_id = session['user']
+        app.logger.debug(f'User {user_id}')
+        print(data)
+        first_name = data['first-name']
+        last_name = data['last-name']
+        email = data['email']
+        height = data['height']
+        weight = data['weight']
+        blood_type = data['blood-type']
+    except KeyError as e:
+        return jsonify({'success': False, 'message': f'Missing field: {e.args[0]}'})
+
+    photo_url = None
+    if 'photo' in request.files:
+        file = request.files['photo']
+        if file and allowed_file(file.filename):
+            filename = secure_filename(file.filename)
+            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            photo_url = filename
+        else:
+            return jsonify({'success': False, 'message': 'Invalid file type'})
+
+    try:
+        cursor = mysql.connection.cursor()
+        if photo_url:
+            cursor.execute("""
+                UPDATE users SET 
+                nombres = %s, 
+                apellidos = %s, 
+                correo = %s, 
+                estatura = %s, 
+                peso = %s, 
+                tipo_sangre = %s,
+                foto = %s
+                WHERE id = %s
+            """, (first_name, last_name, email, height, weight, blood_type, photo_url, user_id))
+        else:
+            cursor.execute("""
+                UPDATE users SET 
+                nombres = %s, 
+                apellidos = %s, 
+                correo = %s,  
+                estatura = %s, 
+                peso = %s, 
+                tipo_sangre = %s
+                WHERE id = %s
+            """, (first_name, last_name, email, height, weight, blood_type, user_id))
+        mysql.connection.commit()
+        cursor.close()
+        return jsonify({'success': True, 'message': 'Perfil actualizado correctamente'})
+    except mysql.Error as e:
+        return jsonify({'success': False, 'message': 'Error updating user: {}'.format(e)})
     
 @app.route('/api/logout', methods=['POST'])
 def logout():
