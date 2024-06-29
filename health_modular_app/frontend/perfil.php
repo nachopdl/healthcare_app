@@ -41,7 +41,7 @@
         <div class="profile-container">
             <h1>Perfil de Usuario</h1>
             <div class="profile-card">
-                <img id="user-photo" src="images/user.jpg" alt="User Photo" class="user-photo">
+                <img id="user-photo" src="" alt="User Photo" class="user-photo">
                 <h2 id="user-fullname">John Doe</h2>
                 <p id="user-age-location">24 años</p>
                 <div class="user-info">
