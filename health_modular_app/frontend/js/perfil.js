@@ -22,11 +22,13 @@ document.addEventListener('DOMContentLoaded', function () {
             document.getElementById('user-blood').textContent = data.blood_type;
             document.getElementById('user-height').textContent = `${data.height} cm`;
             document.getElementById('user-weight').textContent = `${data.weight} kg`;
-            if (data.gender == 'masculino'){
-                document.getElementById('user-photo').src = `uploads/${data.foto}` || 'images/avatar1.png'
-            }else{
-                document.getElementById('user-photo').src = `uploads/${data.foto}` || 'images/avatar.png'
+            let photoUrl = '';
+            if (data.foto) {
+                photoUrl = `uploads/${data.foto}`;
+            } else {
+                photoUrl = data.gender == 'masculino' ? 'images/avatar1.png' : 'images/avatar.png';
             }
+            document.getElementById('user-photo').src = photoUrl;
             // Pre-cargar los datos en el formulario de edición
             document.getElementById('first-name').value = data.first_name;
             document.getElementById('last-name').value = data.last_name;
