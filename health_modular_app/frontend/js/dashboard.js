@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', function () {
     })
     .then(response => {
         if (!response.ok) {
-            throw new Error('Network response was not ok');
+            throw new Error('Respuesta de red no es buena');
         }
         return response.json();
     })
@@ -18,10 +18,11 @@ document.addEventListener('DOMContentLoaded', function () {
         if (data.success){ //Asignacion de informacion en elementos HTML
             document.getElementById('user-name').textContent = `Bienvenido, ${data.first_name}`;
             document.getElementById('user-fullname').textContent = `${data.first_name} ${data.last_name}`;
-            document.getElementById('user-age-location').textContent = `${getAge(data.dob)} años`;
+            document.getElementById('user-age').textContent = `${getAge(data.dob)} años`;
             document.getElementById('user-blood').textContent = data.blood_type;
             document.getElementById('user-height').textContent = `${data.height} cm`;
             document.getElementById('user-weight').textContent = `${data.weight} kg`;
+            document.getElementById('daily-tip').textContent = `${data.consejo}`
             let photoUrl = '';
             if (data.foto) {
                 photoUrl = `uploads/${data.foto}`;
@@ -30,7 +31,7 @@ document.addEventListener('DOMContentLoaded', function () {
             }
             document.getElementById('user-photo').src = photoUrl;
         }else {
-            alert('Failed to load user data: ' + data.message);
+            alert('Error al cargar usuario: ' + data.message);
             window.location.href = 'login.php'; // Redirigir al login si no hay datos de usuario
         }
     })
@@ -119,6 +120,26 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
             }
         }
+    });
+    // Inicializar FullCalendar
+    $('#calendar').fullCalendar({
+        header: {
+            left: 'prev,next today',
+            center: 'title',
+            right: 'month,agendaWeek,agendaDay'
+        },
+        editable: true,
+        events: [
+            {
+                title: 'Cita con Dr. Smith',
+                start: '2024-06-30T10:30:00',
+                end: '2024-06-30T12:30:00'
+            },
+            {
+                title: 'Yoga',
+                start: '2024-06-31T07:00:00'
+            }
+        ]
     });
 });
 
