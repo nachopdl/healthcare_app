@@ -6,6 +6,7 @@ from flask_session import Session
 import logging
 import os
 from werkzeug.utils import secure_filename
+import random 
 
 app = Flask(__name__)
 CORS(app, supports_credentials=True)  # Habilitar CORS para todas las rutas
@@ -41,6 +42,43 @@ Session(app)
 #Funcion para tratar las imagenes
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+#Funcion para obtener de forma aleatoria un consejo de salud
+def obtener_consejo_aleatorio():
+    consejos = [
+        "Bebe al menos 8 vasos de agua al día.",
+        "Realiza al menos 30 minutos de ejercicio diario.",
+        "Come frutas y verduras en cada comida.",
+        "Evita el consumo excesivo de azúcar.",
+        "Duerme al menos 7-8 horas cada noche.",
+        "Lávate las manos frecuentemente.",
+        "Evita el consumo de tabaco y alcohol.",
+        "Mantén una postura correcta al sentarte.",
+        "Realiza estiramientos diarios.",
+        "Reduce el consumo de alimentos procesados.",
+        "Come porciones pequeñas y equilibradas.",
+        "Practica la meditación o técnicas de relajación.",
+        "Evita el estrés tanto como sea posible.",
+        "Mantén un peso saludable.",
+        "Consulta a tu médico regularmente.",
+        "Usa protector solar todos los días.",
+        "Realiza chequeos médicos anuales.",
+        "Limpia y desinfecta las superficies frecuentemente.",
+        "Mantén un entorno limpio y ordenado.",
+        "Usa hilo dental y cepilla tus dientes dos veces al día.",
+        "Limita el tiempo frente a pantallas.",
+        "Realiza actividades al aire libre.",
+        "Mantén una vida social activa.",
+        "Aprende algo nuevo cada día.",
+        "Establece metas personales y trabaja para lograrlas.",
+        "Mantén una actitud positiva.",
+        "Escucha música que te relaje.",
+        "Lee libros que te inspiren.",
+        "Dedica tiempo a tus hobbies.",
+        "Agradece lo que tienes todos los días."
+    ]
+
+    return random.choice(consejos)
 
 
 @app.route('/api/login', methods=['POST'])
@@ -82,7 +120,7 @@ def signup():
 
     if user:
         cursor.close()
-        return jsonify({'success': False, 'message': 'Email already exists'})
+        return jsonify({'success': False, 'message': 'Ya existe el correo electronico'})
 
     # Encriptar la contraseña
     hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
@@ -117,19 +155,35 @@ def user_data():
             cursor.close()
             print(user1[9])
             if user1:
-                return jsonify({
-                    'success': True,
-                    'id': user1[0],
-                    'first_name': user1[1],
-                    'last_name': user1[2],
-                    'email': user1[3],
-                    'dob': user1[4],
-                    'gender': user1[5],
-                    'height': user1[6],
-                    'weight': user1[7],
-                    'blood_type': user1[8],
-                    'foto': user1[9]
-                })
+                if user1[9]:
+                    return jsonify({
+                        'success': True,
+                        'id': user1[0],
+                        'first_name': user1[1],
+                        'last_name': user1[2],
+                        'email': user1[3],
+                        'dob': user1[4],
+                        'gender': user1[5],
+                        'height': user1[6],
+                        'weight': user1[7],
+                        'blood_type': user1[8],
+                        'foto': user1[9],
+                        'consejo': obtener_consejo_aleatorio()
+                    })
+                else:
+                    return jsonify({
+                        'success': True,
+                        'id': user1[0],
+                        'first_name': user1[1],
+                        'last_name': user1[2],
+                        'email': user1[3],
+                        'dob': user1[4],
+                        'gender': user1[5],
+                        'height': user1[6],
+                        'weight': user1[7],
+                        'blood_type': user1[8],
+                        'consejo': obtener_consejo_aleatorio()
+                    })
             else:
                 return jsonify({'success': False, 'message': 'User not found'}), 404
         else:
@@ -163,6 +217,7 @@ def update_user():
             photo_url = filename
         else:
             return jsonify({'success': False, 'message': 'Invalid file type'})
+    print(photo_url)
 
     try:
         cursor = mysql.connection.cursor()
@@ -199,6 +254,69 @@ def update_user():
 def logout():
     session.pop('user', None)
     return jsonify({'success': True, 'message': 'Logged out successfully'})
+
+@app.route('/api/get_excercises', methods=['POST'])
+def get_excercises():
+    data = request.get_json()
+    categoria = {data.get('category')}
+    
+    cursor = mysql.connection.cursor()
+    cursor.execute("SELECT nombre, descripcion, duracion, imagen FROM entrenamientos WHERE categoria=%s", (categoria,))
+    ejercicios = cursor.fetchall()
+    cursor.close()
+
+    ejercicios_lista = [{'nombre': ejercicio[0], 'descripcion': ejercicio[1], 'duracion':ejercicio[2], 'imagen': ejercicio[3]} for ejercicio in ejercicios]
+    return jsonify(ejercicios_lista)
+
+@app.route('/api/update_profile_field', methods=['POST'])
+def update_profile_field():
+    if 'user' not in session:
+        return jsonify({'success': False, 'message': 'No autorizado'}), 401
+
+    data = request.get_json()
+    field = data['field']
+    value = data['value']
+    user_id = session['user']
+
+    # Verificar y sanitizar el campo y valor para evitar inyecciones SQL
+    allowed_fields = ['correo', 'genero', 'estatura', 'peso', 'tipo_sangre']
+    if field not in allowed_fields:
+        return jsonify({'success': False, 'message': 'Campo inválido'}), 400
+
+    cursor = mysql.connection.cursor()
+    try:
+        cursor.execute(f"UPDATE users SET {field} = %s WHERE id = %s", (value, user_id))
+        mysql.connection.commit()
+        cursor.close()
+        return jsonify({'success': True, 'message': 'Campo actualizado correctamente'})
+    except Exception as e:
+        print(e)
+        return jsonify({'success': False, 'message': 'Error al actualizar el campo'}), 500
+
+@app.route('/api/update_profile_photo', methods=['POST'])
+def update_profile_photo():
+    if 'user' not in session:
+        return jsonify({'success': False, 'message': 'No autorizado'}), 401
+
+    if 'photo' not in request.files:
+        return jsonify({'success': False, 'message': 'No se ha enviado ninguna foto'}), 400
+
+    file = request.files['photo']
+    if file and allowed_file(file.filename):
+        filename = secure_filename(file.filename)
+        file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+        file.save(file_path)
+
+        # Actualizar la base de datos con la ruta del archivo
+        cursor = mysql.connection.cursor()
+        cursor.execute("UPDATE users SET foto = %s WHERE id = %s", (filename, session['user']))
+        mysql.connection.commit()
+        cursor.close()
+
+        return jsonify({'success': True, 'message': 'Foto de perfil actualizada correctamente'})
+    else:
+        return jsonify({'success': False, 'message': 'Tipo de archivo no permitido'}), 400
+
 
 if __name__ == '__main__':
     app.run(debug=True)
