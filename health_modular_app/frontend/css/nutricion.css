@@ -1,105 +1,175 @@
-body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background-color: #f0f0f0;
-    color: #313030;
-}
+/* Estilos personalizados para MediConnect */
 
-.container {
-    display: flex;
-}
-
-.navbar {
-    width: 250px;
-    background-color: #BECFD7;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 20px 0;
-    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
-}
-
-.navbar-brand {
-    display: flex;
-    align-items: center;
-    margin-bottom: 20px;
-}
-
+/* Barra de navegación */
 .navbar-brand img {
     width: 40px;
-    margin-right: 10px;
+    height: 40px;
 }
-
-.navbar-brand span {
-    font-size: 1.5em;
-    font-weight: bold;
+.navbar-nav .nav-item .nav-link {
+    color: #333;
+    font-weight: 600;
 }
-
-.nav-links {
-    list-style: none;
-    padding: 0;
-    width: 100%;
+.navbar-nav .nav-item .nav-link:hover {
+    color: #007bff;
 }
-
-.nav-links li {
-    width: 100%;
-    position: relative;
+.navbar-nav .dropdown-menu {
+    background-color: #f8f9fa;
 }
-
-.nav-links a {
-    display: block;
-    padding: 15px;
-    padding-left: 10px;
-    text-decoration: none;
-    color: #313030;
-    text-align: left;
-    width: 100%;
-    transition: background-color 0.3s ease;
-}
-
-.nav-links a:hover {
-    background-color: #A996C4;
+.navbar-nav .dropdown-item:hover {
+    background-color: #007bff;
     color: #fff;
-    box-sizing: border-box;
 }
 
-.submenu {
-    display: none;
-    box-sizing: border-box;
-    list-style: none;
+body, html {
+    height: 100%;
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+}
+.hero-section {
+    background-image: url('../images/nut1.webp'); /* Reemplaza con la ruta de tu imagen */
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
     position: relative;
-    top: 100%;
+}
+.overlay {
+    position: absolute;
+    top: 0;
     left: 0;
-    background-color: #BECFD7;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.content {
+    position: relative;
     z-index: 1;
+    text-align: left;
 }
-
-.nav-item:hover .submenu {
-    display: block;
-}
-
-.navbar-logout {
-    margin-top: auto;
-}
-
-.navbar-logout a {
-    color: #313030;
-    text-decoration: none;
-    font-weight: bold;
-}
-
-.navbar-logout a:hover {
-    color: #A996C4;
-}
-
-.main-panel {
-    flex: 1;
-    padding: 20px;
-    background-color: #fff;
-}
-
-.overview {
+.content h1 {
+    font-size: 3.5em;
     margin-bottom: 20px;
 }
+.content p {
+    font-size: 1.2em;
+    margin-bottom: 30px;
+}
+.btn-custom {
+    background-color: transparent;
+    border: 2px solid #613c3c;
+    color: black;
+    padding: 10px 20px;
+    font-size: 1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    text-shadow: 1px 1px 2px green;
+}
+.btn-custom:hover {
+    background-color: #28a745;
+    color: white;
+}
+.card-text{
+    position: relative;
+    z-index: 1;
+    text-align: center;
+}
+.custom-card {
+    background-image: url('../images/nut5.webp'); /* Reemplaza con la ruta de tu imagen */
+    background-size: cover;
+    background-position: center;
+    border-radius: 10px;
+    padding: 40px;
+    margin: 20px 0;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+}
+
+.custom-card-1 {
+    background-image: url('../images/nutricionista.avif'); /* Reemplaza con la ruta de tu imagen */
+    background-size: cover;
+    background-position: center;
+    border-radius: 10px;
+    padding: 40px;
+    margin: 20px 0;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+}
+
+#title-perso {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 3.5rem;
+    font-weight: bold;
+    -webkit-text-stroke: 0.7px black;
+    text-shadow: 1px 1px 2px white;
+    color: white;
+    text-align: center;
+}
+
+#tmb-info {
+    color: white;
+    font-size: 1.3rem;
+}
+
+.card-title {
+font-family: 'Open Sans', sans-serif;
+font-size: 36px;
+font-weight: bold;
+color: white;
+text-align: center;
+}
+
+.card-title-1 {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 36px;
+    font-weight: bold;
+    color: black;
+    text-align: center;
+    }
+
+#texto-perso {
+font-family: 'Open Sans', sans-serif;
+font-size: 24px;
+font-weight: bold;
+-webkit-text-stroke: 0.9px black;
+color: white;
+padding: 20px;
+display: inline-block;
+}
+
+.btn-orange {
+    background-color: #FFC107;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    }
+    
+    .btn-orange:hover {
+    background-color: #FFA07A;
+    }
+
+    .card-body {
+        text-align: center;
+    }
+    
+    .section-title {
+        text-align: center;
+        margin-bottom: 40px;
+    }
+    .section-title h2 {
+        font-size: 2.5rem;
+        font-weight: 700;
+    }
+    .section-title p {
+        font-size: 1.1rem;
+        color: #6c757d;
+    }
