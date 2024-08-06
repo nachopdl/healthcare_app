@@ -1,0 +1,168 @@
+/* Estilos personalizados para MediConnect */
+
+/* Barra de navegación */
+.navbar-brand img {
+    width: 40px;
+    height: 40px;
+}
+.navbar-nav .nav-item .nav-link {
+    color: #333;
+    font-weight: 600;
+}
+.navbar-nav .nav-item .nav-link:hover {
+    color: #007bff;
+}
+.navbar-nav .dropdown-menu {
+    background-color: #f8f9fa;
+}
+.navbar-nav .dropdown-item:hover {
+    background-color: #007bff;
+    color: #fff;
+}
+
+body, html {
+    height: 100%;
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+}
+.hero-section {
+    background-image: url('../images/background3.webp'); /* Reemplaza con la ruta de tu imagen */
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    position: relative;
+}
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+}
+
+
+.content {
+    position: relative;
+    z-index: 1;
+    text-align: left;
+}
+.content h1 {
+    font-size: 3.5em;
+    margin-bottom: 20px;
+}
+.content p {
+    font-size: 1.2em;
+    margin-bottom: 30px;
+}
+.btn-custom {
+    background-color: transparent;
+    border: 2px solid #613c3c;
+    color: black;
+    padding: 10px 20px;
+    font-size: 1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    text-shadow: 1px 1px 2px green;
+}
+.btn-custom:hover {
+    background-color: #28a745;
+    color: white;
+}
+
+.custom-card {
+    background-image: url('../images/background-fitness.jpg'); /* Reemplaza con la ruta de tu imagen */
+    background-size: cover;
+    background-position: center;
+    border-radius: 10px;
+    padding: 40px;
+    margin: 20px 0;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+  }
+
+#ejercicio{
+    width: 100%; 
+    max-width: 300px; 
+    align-items: center;
+}
+.card-text{
+    position: relative;
+    z-index: 1;
+    text-align: center;
+}
+#title-perso {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 3.5rem;
+    font-weight: bold;
+    -webkit-text-stroke: 0.7px black;
+    text-shadow: 1px 1px 2px white;
+    color: white;
+    text-align: center;
+}
+
+.card-title {
+font-family: 'Open Sans', sans-serif;
+font-size: 36px;
+font-weight: bold;
+color: black;
+text-align: center;
+}
+
+#texto-perso {
+font-family: 'Open Sans', sans-serif;
+font-size: 24px;
+font-weight: bold;
+-webkit-text-stroke: 0.9px black;
+color: white;
+padding: 20px;
+display: inline-block;
+}
+
+.btn-orange {
+background-color: #FFC107;
+color: white;
+border: none;
+border-radius: 5px;
+padding: 10px 20px;
+font-size: 18px;
+font-weight: bold;
+cursor: pointer;
+}
+
+.btn-orange:hover {
+background-color: #FFA07A;
+}
+
+.card-img {
+width: 100%;
+height: 150px;
+object-fit: cover;
+border-radius: 10px;
+}
+
+.card-body {
+    text-align: center;
+}
+
+.section-title {
+    text-align: center;
+    margin-bottom: 40px;
+}
+.section-title h2 {
+    font-size: 2.5rem;
+    font-weight: 700;
+}
+.section-title p {
+    font-size: 1.1rem;
+    color: #6c757d;
+}
+
+#img_excercise{
+    max-width: 200px;
+}
